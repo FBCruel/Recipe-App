@@ -1,0 +1,320 @@
+﻿@page
+@model RecipeApp.Pages.Recipe.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    int i = 0;
+    string rate = "";
+}
+
+<h1>Recipes</h1>
+
+<form>
+    <p>
+        <input type="text" id="SearchString" />
+        <input type="submit" value="Search" />
+    </p>
+    <p>
+        Difficulty Level:
+        <label>
+            <input type="checkbox" name="difficulty" value="1" /> 1
+        </label>
+        <label>
+            <input type="checkbox" name="difficulty" value="2-3" /> 2-3
+        </label>
+        <label>
+            <input type="checkbox" name="difficulty" value="4-5" /> 4-5
+        </label>
+    </p>
+    <p>
+        Servings:
+        <label>
+            <input type="checkbox" name="servings" value="1-2" /> 1-2
+        </label>
+        <label>
+            <input type="checkbox" name="servings" value="3-4" /> 3-4
+        </label>
+        <label>
+            <input type="checkbox" name="servings" value="5+" /> 5+
+        </label>
+    </p>
+</form>
+
+
+<p>
+    <a asp-page="Create" class="btn btn-warning">Create New Recipe</a>
+</p>
+
+<link href="~/css/jquery.rateyo.min.css" rel="stylesheet" />
+
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/jquery.rateyo.min.js"></script>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Recipe)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(item.Image)" alt="Recipe Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+
+                        <div class="card-text" id="rateIt">
+                            <input name="_rate" type="hidden" id="rating"/>
+                            <a class="btn btn-success" asp-page="/Rate" asp-route-id="@item.Id">Rate</a>
+                            @if (Model.RecipeAverageRatingsList[i] == 0)
+                            {
+
+                                rate = "No Rating";
+                                i++;
+                            }
+                            else
+                            {
+                                rate = "Average rating is " + Model.RecipeAverageRatingsList[i].ToString() + " out of 5 ";
+
+                                i++;
+                            }
+                            @rate
+                            <br />
+                        </div>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description).</p>
+                        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a> ||
+                        <a class="btn btn-primary" asp-page="/Comment" asp-route-id="@item.Id">Comments</a>
+                    </div>
+                </div>
+            </div>
+        }
+    <div />
+<div />
+
+        <style>
+            .container {
+                padding: 20px;
+            }
+
+            .card {
+                border: none;
+                background-color: #f5f5f5;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+            }
+
+                .card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+                }
+
+            .card-img-top {
+                height: 200px;
+                object-fit: cover;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+
+            .card-title {
+                font-size: 24px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .card-text {
+                color: #666;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: bold;
+                text-transform: uppercase;
+                padding: 8px 16px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-success {
+                background-color: #00b894;
+                border-color: #00b894;
+                color: #fff;
+            }
+
+            .btn-primary {
+                background-color: #0984e3;
+                border-color: #0984e3;
+                color: #fff;
+            }
+
+            .btn-danger {
+                background-color: #d63031;
+                border-color: #d63031;
+                color: #fff;
+            }
+
+            .btn:hover {
+                transform: scale(1.1);
+            }
+
+            a {
+                text-decoration: none;
+                color: #3498db;
+                transition: color 0.3s ease;
+            }
+
+                a:hover {
+                    color: #555;
+                }
+
+            .form {
+                margin-bottom: 20px;
+            }
+
+            input[type="text"] {
+                width: 200px;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                font-size: 14px;
+                color: #666;
+            }
+
+            input[type="submit"] {
+                padding: 8px 16px;
+                background-color: #0984e3;
+                border-color: #0984e3;
+                color: #fff;
+                cursor: pointer;
+            }
+
+                input[type="submit"]:hover {
+                    background-color: #00b894;
+                    border-color: #00b894;
+                }
+
+            .checkbox-container {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+                .checkbox-container label {
+                    margin-right: 10px;
+                    font-size: 14px;
+                    color: #666;
+                }
+
+                .checkbox-container input[type="checkbox"] {
+                    margin-right: 5px;
+                    cursor: pointer;
+                    appearance: none;
+                    width: 16px;
+                    height: 16px;
+                    border: 2px solid #ddd;
+                    border-radius: 2px;
+                    transition: border-color 0.3s ease;
+                }
+
+                    .checkbox-container input[type="checkbox"]:checked {
+                        border-color: #0984e3;
+                        background-color: #0984e3;
+                    }
+
+                        .checkbox-container input[type="checkbox"]:checked::before {
+                            content: "\2713";
+                            display: block;
+                            color: #fff;
+                            text-align: center;
+                            line-height: 16px;
+                            font-size: 12px;
+                        }
+
+            .btn-warning {
+                background-color: #ffc107;
+                border-color: #ffc107;
+                color: #fff;
+            }
+
+                .btn-warning:hover {
+                    background-color: #dc3545;
+                    border-color: #dc3545;
+                }
+
+            .rateIt {
+                margin-top: 15px;
+            }
+
+            .rating-label {
+                font-size: 14px;
+                color: #999;
+                margin-bottom: 10px;
+            }
+
+            .rating-value {
+                font-size: 16px;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+                .rating-value.no-rating {
+                    color: #d63031;
+                }
+
+                .rating-value.average-rating {
+                    color: #00b894;
+                }
+        </style>
+
+
+
+
+
+        <script>
+            const SearchString = document.getElementById('SearchString');
+            const recipeItems = document.querySelectorAll('.col-md-4');
+
+            SearchString.addEventListener('input', function () {
+                const searchString = SearchString.value.toLowerCase();
+
+                recipeItems.forEach(function (recipeItem) {
+                    const title = recipeItem.querySelector('.card-title').textContent.toLowerCase();
+                    const description = recipeItem.querySelector('.card-text').textContent.toLowerCase();
+
+                    if (title.includes(searchString) || description.includes(searchString)) {
+                        recipeItem.style.display = 'block';
+                    } else {
+                        recipeItem.style.display = 'none';
+                    }
+                });
+            });
+
+            function filterRecipes() {
+                const difficultyFilters = Array.from(document.querySelectorAll('input[name="difficulty"]:checked')).map(input => input.value);
+                const servingsFilters = Array.from(document.querySelectorAll('input[name="servings"]:checked')).map(input => input.value);
+
+                const recipeCards = document.querySelectorAll('.card');
+                recipeCards.forEach(card => {
+                    const difficultyLevel = card.querySelector('.difficulty-level').textContent.trim();
+                    const servings = card.querySelector('.servings').textContent.trim();
+
+                    const isDifficultyMatch = difficultyFilters.length === 0 || difficultyFilters.includes(difficultyLevel);
+                    const isServingsMatch = servingsFilters.length === 0 || servingsFilters.includes(servings);
+
+                    card.style.display = isDifficultyMatch && isServingsMatch ? 'block' : 'none';
+                });
+            }
+
+            const checkboxes = document.querySelectorAll('input[name="difficulty"], input[name="servings"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', filterRecipes);
+            });
+        </script>
+
+
+
+
+
+

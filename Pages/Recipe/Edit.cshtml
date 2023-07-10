@@ -1,0 +1,153 @@
+﻿@page
+@model RecipeApp.Pages.Recipe.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Recipe</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Recipe.Id" />
+            <div class="form-group">
+                <label asp-for="Recipe.Title" class="control-label"></label>
+                <input asp-for="Recipe.Title" class="form-control" />
+                <span asp-validation-for="Recipe.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.Description" class="control-label"></label>
+                <input asp-for="Recipe.Description" class="form-control" />
+                <span asp-validation-for="Recipe.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.Image" class="control-label"></label>
+                <input asp-for="Recipe.Image" type="file" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.Cuisine" class="control-label"></label>
+                <input asp-for="Recipe.Cuisine" class="form-control" />
+                <span asp-validation-for="Recipe.Cuisine" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.DifficultyLevel" class="control-label"></label>
+                <input asp-for="Recipe.DifficultyLevel" class="form-control" />
+                <span asp-validation-for="Recipe.DifficultyLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.PreparationTime" class="control-label"></label>
+                <input asp-for="Recipe.PreparationTime" class="form-control" />
+                <span asp-validation-for="Recipe.PreparationTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.CookingTime" class="control-label"></label>
+                <input asp-for="Recipe.CookingTime" class="form-control" />
+                <span asp-validation-for="Recipe.CookingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.Servings" class="control-label"></label>
+                <input asp-for="Recipe.Servings" class="form-control" />
+                <span asp-validation-for="Recipe.Servings" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="Recipe.UserId" class="control-label"></label>*@
+                <input type="hidden" asp-for="Recipe.UserId" class="form-control" />
+                <span asp-validation-for="Recipe.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+<style>
+    .container {
+        padding: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    .btn-primary {
+        background-color: #0984e3;
+        border-color: #0984e3;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #00b894;
+            border-color: #00b894;
+        }
+
+    .row {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #0984e3;
+        border-color: #0984e3;
+        color: #fff;
+    }
+
+        .btn-primary:hover {
+            background-color: #00b894;
+            border-color: #00b894;
+        }
+
+    a {
+        text-decoration: none;
+        color: #3498db;
+        transition: color 0.3s ease;
+    }
+
+        a:hover {
+            color: #555;
+        }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
